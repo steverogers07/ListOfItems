@@ -3,25 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <title>Wedding Gift Registry</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background-color: #f4f4f4; }
-  </style>
-  <!-- Add PapaParse before your JavaScript -->
+  <!-- Wedding-inspired Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- PapaParse -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    /* Background with subtle floral pattern and color */
+    body {
+      background: #fff7f8 url('https://www.transparenttextures.com/patterns/flowers.png');
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 8px 40px rgba(225,174,140,0.14);
+      padding: 32px;
+      border: 4px solid #ede3da;
+      position: relative;
+    }
+
+    .corner-flower {
+      position: absolute;
+      width: 64px;
+      opacity: 0.22;
+    }
+    .corner-flower.tl { left: -36px; top: -36px; transform: rotate(-18deg);}
+    .corner-flower.tr { right: -36px; top: -36px; transform: scaleX(-1) rotate(-5deg);}
+    .corner-flower.bl { left: -36px; bottom: -36px; transform: scaleY(-1) rotate(8deg);}
+    .corner-flower.br { right: -36px; bottom: -36px; transform: scaleX(-1) scaleY(-1) rotate(23deg);}
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      color: #D1907B;
+      font-size: 2.6em;
+      text-align: center;
+      margin-bottom: 8px;
+      margin-top: 0;
+      letter-spacing: 1px;
+      text-shadow: 0px 2px 6px #eed7c2a0;
+    }
+
+    .heart {
+      color: #FF77A9;
+      font-size: 1.3em;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    p {
+      color: #7c5b40;
+      text-align: center;
+      margin-bottom: 28px;
+      font-size: 1.13em;
+      font-family: Montserrat, Arial, sans-serif;
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%;
+      background: #FFFAF4;
+      margin-top: 18px;
+      box-shadow: 0 4px 26px rgba(225,174,140,0.10);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 1.03em;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    th {
+      background: linear-gradient(90deg, #fff4f6 70%, #e5bba2 100%);
+      color: #b06e54;
+      font-weight: 700;
+      font-size: 1.08em;
+      border-bottom: 2px solid #e7b99e;
+    }
+    tbody tr:nth-child(even) {
+      background: #fff0f6;
+    }
+    tbody tr:nth-child(odd) {
+      background: #ffe7dc;
+    }
+    td {
+      color: #7c4c2a;
+      border-bottom: 1px solid #f2dbcd;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 12px; border-width: 2px; }
+      th, td { padding: 7px 7px; font-size: 1em;}
+      .corner-flower { width: 38px;}
+    }
+  </style>
 </head>
 <body>
-  <h1>Wedding Gift Items List</h1>
-  <p>This table lists who is giving what for my sister's wedding.</p>
-  <table id="gift-table">
-    <thead>
-      <tr><th>Item</th><th>Giver</th></tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <div class="container">
+    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower tl" alt="rose flower corner"/>
+    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower tr" alt="rose flower corner"/>
+    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower bl" alt="rose flower corner"/>
+    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower br" alt="rose flower corner"/>
+    <h1><span class="heart">💗</span>Wedding Gift Items List</h1>
+    <p>
+      Thank you for being part of our celebration!<br>
+      Below is the list of items and their generous givers for my sister’s wedding.  
+    </p>
+    <table id="gift-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Giver</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
   <script>
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcW_gfIyn4K2B3T7SpFAlXSNyjtHT5A3op-QQPva2wqqEVj72fJWx1POBMy_LPgJ0v2vP5xlceKOe0/pub?output=csv';
     fetch(csvUrl)
@@ -32,6 +135,7 @@
           skipEmptyLines: true,
           complete: function(results) {
             const tbody = document.querySelector('#gift-table tbody');
+            tbody.innerHTML = '';
             results.data.forEach(row => {
               const tr = document.createElement('tr');
               tr.innerHTML = `<td>${row.Items}</td><td>${row.Giver}</td>`;
