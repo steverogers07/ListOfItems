@@ -45,36 +45,32 @@
         <th>Giver</th>
       </tr>
     </thead>
-    <tbody>
-      <!-- Data will be inserted here -->
-    </tbody>
+    <tbody></tbody>
   </table>
 
+  <!-- Load Tabletop.js -->
+  <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.0/tabletop.min.js"></script>
+
   <script>
-  const SHEET_ID = '2PACX-1vQcW_gfIyn4K2B3T7SpFAlXSNyjtHT5A3op-QQPva2wqqEVj72fJWx1POBMy_LPgJ0v2vP5xlceKOe0';
-  const SHEET_NAME = 'Sheet1'; // Change if your sheet tab is named differently
-  const API_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+    const publicSpreadsheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcW_gfIyn4K2B3T7SpFAlXSNyjtHT5A3op-QQPva2wqqEVj72fJWx1POBMy_LPgJ0v2vP5xlceKOe0/pubhtml';
 
-  fetch(API_URL)
-    .then(res => res.text())
-    .then(rep => {
-      const jsonData = JSON.parse(rep.substr(47).slice(0, -2));
-      const table = document.getElementById('giftTable').getElementsByTagName('tbody')[0];
-
-      jsonData.table.rows.forEach(row => {
-        const item = row.c[0]?.v || '—';
-        const giver = row.c[1]?.v || '—';
-
+    function showInfo(data) {
+      const tbody = document.getElementById('giftTable').querySelector('tbody');
+      data.forEach(row => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${item}</td><td>${giver}</td>`;
-        table.appendChild(tr);
+        tr.innerHTML = `<td>${row.Item || '—'}</td><td>${row.Giver || '—'}</td>`;
+        tbody.appendChild(tr);
       });
-    })
-    .catch(err => {
-      console.error('Error loading data:', err);
-      alert('Could not load data. Please check the sheet ID or sharing settings.');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      Tabletop.init({
+        key: publicSpreadsheetURL,
+        simpleSheet: true,
+        callback: showInfo
+      });
     });
-</script>
+  </script>
 
 </body>
 </html>
