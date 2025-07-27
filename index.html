@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wedding Gift Registry 🎊</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdf6f0;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #c06c84;
+    }
+    .gift-table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 80%;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .gift-table th, .gift-table td {
+      border: 1px solid #eee;
+      padding: 12px;
+    }
+    .gift-table th {
+      background: #f9c9c9;
+      color: #333;
+    }
+    .gift-table td {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💝 Gifts Given at My Sister's Marriage 💝</h1>
+  <table class="gift-table" id="giftTable">
+    <thead>
+      <tr>
+        <th>Gift Item</th>
+        <th>Giver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    const SHEET_ID = 'YOUR_SHEET_ID_HERE';
+    const SHEET_NUMBER = '1'; // First sheet
+    const API_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQcW_gfIyn4K2B3T7SpFAlXSNyjtHT5A3op-QQPva2wqqEVj72fJWx1POBMy_LPgJ0v2vP5xlceKOe0/pubhtml?gid=0&single=true`;
+
+    fetch(API_URL)
+      .then(res => res.text())
+      .then(rep => {
+        const jsonData = JSON.parse(rep.substr(47).slice(0, -2));
+        const table = document.getElementById('giftTable').getElementsByTagName('tbody')[0];
+
+        jsonData.table.rows.forEach(row => {
+          const item = row.c[0]?.v || '—';
+          const giver = row.c[1]?.v || '—';
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${item}</td><td>${giver}</td>`;
+          table.appendChild(tr);
+        });
+      })
+      .catch(err => {
+        console.error('Error loading data:', err);
+        alert('Could not load data. Please check the sheet ID or sharing settings.');
+      });
+  </script>
+
+</body>
+</html>
