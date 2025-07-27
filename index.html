@@ -28,16 +28,6 @@
       position: relative;
     }
 
-    .corner-flower {
-      position: absolute;
-      width: 64px;
-      opacity: 0.22;
-    }
-    .corner-flower.tl { left: -36px; top: -36px; transform: rotate(-18deg);}
-    .corner-flower.tr { right: -36px; top: -36px; transform: scaleX(-1) rotate(-5deg);}
-    .corner-flower.bl { left: -36px; bottom: -36px; transform: scaleY(-1) rotate(8deg);}
-    .corner-flower.br { right: -36px; bottom: -36px; transform: scaleX(-1) scaleY(-1) rotate(23deg);}
-
     h1 {
       font-family: 'Great Vibes', cursive;
       color: #D1907B;
@@ -55,12 +45,10 @@
       vertical-align: middle;
       margin-right: 8px;
     }
+    
     p {
-      color: #7c5b40;
-      text-align: center;
-      margin-bottom: 28px;
-      font-size: 1.13em;
-      font-family: Montserrat, Arial, sans-serif;
+      /* removed the content, so this <p> can be removed or kept empty - removing it here */
+      display: none;
     }
 
     table {
@@ -99,21 +87,12 @@
     @media (max-width: 600px) {
       .container { padding: 12px; border-width: 2px; }
       th, td { padding: 7px 7px; font-size: 1em;}
-      .corner-flower { width: 38px;}
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower tl" alt="rose flower corner"/>
-    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower tr" alt="rose flower corner"/>
-    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower bl" alt="rose flower corner"/>
-    <img src="https://img.icons8.com/color/96/roses.png" class="corner-flower br" alt="rose flower corner"/>
     <h1><span class="heart">💗</span>Wedding Gift Items List</h1>
-    <p>
-      Thank you for being part of our celebration!<br>
-      Below is the list of items and their generous givers for my sister’s wedding.  
-    </p>
     <table id="gift-table">
       <thead>
         <tr>
