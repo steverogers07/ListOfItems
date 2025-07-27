@@ -1,52 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Wedding Gift Registry</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f4f4f4; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Wedding Gift Registry</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f4f4f4; }
+  </style>
+  <!-- Add PapaParse before your JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
-    <h1>Wedding Gift Items List</h1>
-    <p>This table lists who is giving what for my sister's wedding.</p>
-    <table id="gift-table">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Giver</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-
-    <script>
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcW_gfIyn4K2B3T7SpFAlXSNyjtHT5A3op-QQPva2wqqEVj72fJWx1POBMy_LPgJ0v2vP5xlceKOe0/pub?output=csv';
-
-        fetch(csvUrl)
-          .then(response => response.text())
-          .then(csvData => {
-            Papa.parse(csvData, {
-              header: true,
-              skipEmptyLines: true,
-              complete: function(results) {
-                const tbody = document.querySelector('#gift-table tbody');
-                results.data.forEach(row => {
-                  const tr = document.createElement('tr');
-                  tr.innerHTML = `<td>${row.Items}</td><td>${row.Giver}</td>`;
-                  tbody.appendChild(tr);
-                });
-              }
+  <h1>Wedding Gift Items List</h1>
+  <p>This table lists who is giving what for my sister's wedding.</p>
+  <table id="gift-table">
+    <thead>
+      <tr><th>Item</th><th>Giver</th></tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <script>
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcW_gfIyn4K2B3T7SpFAlXSNyjtHT5A3op-QQPva2wqqEVj72fJWx1POBMy_LPgJ0v2vP5xlceKOe0/pub?output=csv';
+    fetch(csvUrl)
+      .then(response => response.text())
+      .then(csvData => {
+        Papa.parse(csvData, {
+          header: true,
+          skipEmptyLines: true,
+          complete: function(results) {
+            const tbody = document.querySelector('#gift-table tbody');
+            results.data.forEach(row => {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `<td>${row.Items}</td><td>${row.Giver}</td>`;
+              tbody.appendChild(tr);
             });
-          })
-          .catch(error => {
-            console.error('Error loading CSV:', error);
-          });
-
-    </script>
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Error loading CSV:', error);
+      });
+  </script>
 </body>
 </html>
