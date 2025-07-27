@@ -28,24 +28,25 @@
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcW_gfIyn4K2B3T7SpFAlXSNyjtHT5A3op-QQPva2wqqEVj72fJWx1POBMy_LPgJ0v2vP5xlceKOe0/pub?output=csv';
 
         fetch(csvUrl)
-            .then(response => response.text())
-            .then(data => {
-                const rows = data.trim().split('\\n');
+          .then(response => response.text())
+          .then(csvData => {
+            Papa.parse(csvData, {
+              header: true,
+              skipEmptyLines: true,
+              complete: function(results) {
                 const tbody = document.querySelector('#gift-table tbody');
-                rows.slice(1).forEach(row => {
-                    const cols = row.split(',');
-                    const tr = document.createElement('tr');
-                    cols.forEach(col => {
-                        const td = document.createElement('td');
-                        td.textContent = col;
-                        tr.appendChild(td);
-                    });
-                    tbody.appendChild(tr);
+                results.data.forEach(row => {
+                  const tr = document.createElement('tr');
+                  tr.innerHTML = `<td>${row.Items}</td><td>${row.Giver}</td>`;
+                  tbody.appendChild(tr);
                 });
-            })
-            .catch(error => {
-                console.error('Error loading CSV:', error);
+              }
             });
+          })
+          .catch(error => {
+            console.error('Error loading CSV:', error);
+          });
+
     </script>
 </body>
 </html>
